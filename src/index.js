@@ -34,7 +34,6 @@ let roundCount = 0; // track the number of rounds that have been played so far
     //sound: new Audio("../assets/simon-says-sound-1.mp3"),
     sound: new Audio("https://github.com/kchia/simon-says-sounds/blob/main/simon-says-sound-1.mp3?raw=true"),
   },
-  // TODO: Add the objects for the green, blue, and yellow pads. Use object for the red pad above as an example.
   {
     color: "green",
     selector: document.querySelector(".js-pad-green"),

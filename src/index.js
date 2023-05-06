@@ -4,7 +4,6 @@
 
 
  const startButton = document.querySelector(".js-start-button");
- // TODO: Add the missing query selectors:
  const statusSpan = document.querySelector(".js-status"); // Use querySelector() to get the status element
  const heading = document.querySelector(".js-heading"); // Use querySelector() to get the heading element
  const padContainer =  document.querySelector(".js-pad-container"); // Use querySelector() to get the pad element
@@ -26,11 +25,6 @@ let roundCount = 0; // track the number of rounds that have been played so far
  * - The `color` property is set to the color of the pad (e.g., "red", "blue").
  * - The `selector` property is set to the DOM selector for the pad.
  * - The `sound` property is set to an audio file using the Audio() constructor.
- *
- * Audio file for the green pad: "../assets/simon-says-sound-2.mp3"
- * Audio file for the blue pad: "../assets/simon-says-sound-3.mp3"
- * Audio file for the yellow pad: "../assets/simon-says-sound-4.mp3"
- *
  */
 
  const pads = [
@@ -64,7 +58,6 @@ let roundCount = 0; // track the number of rounds that have been played so far
  */
 
 padContainer.addEventListener("click", padHandler);
-// TODO: Add an event listener `startButtonHandler()` to startButton.
 startButton.addEventListener("click", startButtonHandler);
 
 /**
@@ -73,24 +66,21 @@ startButton.addEventListener("click", startButtonHandler);
 
 /**
  * Called when the start button is clicked.
- *
- * 1. Call setLevel() to set the level of the game
- *
- * 2. Increment the roundCount from 0 to 1
- *
- * 3. Hide the start button by adding the `.hidden` class to the start button
- *
- * 4. Unhide the status element, which displays the status messages, by removing the `.hidden` class
- *
- * 5. Call `playComputerTurn()` to start the game with the computer going first.
- *
  */
 function startButtonHandler() {
-  // TODO: Write your code here.
+  // Call setLevel() to set the level of the game
   maxRoundCount = setLevel();
+
+  // Increment the roundCount from 0 to 1
   roundCount++;
+
+  // Hide the start button by adding the `.hidden` class to the start button
   startButton.classList.add("hidden");
+
+  // Unhide the status element, which displays the status messages, by removing the `.hidden` class
   statusSpan.classList.remove("hidden");
+
+  // Call `playComputerTurn()` to start the game with the computer going first.
   playComputerTurn();
 
   return { startButton, statusSpan };
@@ -98,30 +88,26 @@ function startButtonHandler() {
 
 /**
  * Called when one of the pads is clicked.
- *
- * 1. `const { color } = event.target.dataset;` extracts the value of `data-color`
- * attribute on the element that was clicked and stores it in the `color` variable
- *
- * 2. `if (!color) return;` exits the function if the `color` variable is falsy
- *
- * 3. Use the `.find()` method to retrieve the pad from the `pads` array and store it
- * in a variable called `pad`
- *
- * 4. Play the sound for the pad by calling `pad.sound.play()`
- *
- * 5. Call `checkPress(color)` to verify the player's selection
- *
- * 6. Return the `color` variable as the output
  */
 function padHandler(event) {
+  // const { color } = event.target.dataset;` extracts the value of `data-color`
+  // attribute on the element that was clicked and stores it in the `color` variable
   const { color } = event.target.dataset;
+
+  // `if (!color) return;` exits the function if the `color` variable is falsy
   if (!color) return;
 
-  // TODO: Write your code here.
+  // Use the `.find()` method to retrieve the pad from the `pads` array and store it
+  // in a variable called `pad`
   const pad = pads.find((padColor) => padColor.color === color);
+
+  // Play the sound for the pad by calling `pad.sound.play()`
   pad.sound.play();
+
+  // Call `checkPress(color)` to verify the player's selection
   checkPress(color);
 
+  // Return the `color` variable as the output
   return color;
 }
 
@@ -138,16 +124,6 @@ function padHandler(event) {
  * Skill level 2: 14 rounds
  * Skill level 3: 20 rounds
  * Skill level 4: 31 rounds
- *
- *
- * Example:
- * setLevel() //> returns 8
- * setLevel(1) //> returns 8
- * setLevel(2) //> returns 14
- * setLevel(3) //> returns 20
- * setLevel(4) //> returns 31
- * setLevel(5) //> returns "Please enter level 1, 2, 3, or 4";
- * setLevel(8) //> returns "Please enter level 1, 2, 3, or 4";
  *
  */
 function setLevel(level = 1) {
@@ -177,10 +153,6 @@ function setLevel(level = 1) {
  * the random number returned will be between 0 and 4 (exclusive)
  *
  * 3. Math.floor() rounds the numbers down to the largest integer less than or equal the given value
- *
- * Example:
- * getRandomItem([1, 2, 3, 4]) //> returns 2
- * getRandomItem([1, 2, 3, 4]) //> returns 1
  */
 function getRandomItem(collection) {
    if (collection.length === 0) return null;
@@ -192,31 +164,23 @@ function getRandomItem(collection) {
  * Sets the status text of a given HTML element with a given a message
  */
 function setText(element, text) {
-  // TODO: Write your code here.
-
   element.textContent = text;
-
   return element;
 }
 
 /**
  * Activates a pad of a given color by playing its sound and light
- *
- * 1. Use the `.find()` method to retrieve the pad from the `pads` array and store it in
- * a variable called `pad`
- *
- * 2. Add the `"activated"` class to the selected pad
- *
- * 3. Play the sound associated with the pad
- *
- * 4. After 500ms, remove the `"activated"` class from the pad
  */
 
 function activatePad(color) {
-  // TODO: Write your code here.
+  //Use the `.find()` method to retrieve the pad from the `pads` array and store it in
+  // a variable called `pad` 
   let pad = pads.find((padcolor) => padcolor.color === color); 
+  // Add the `"activated"` class to the selected pad
   pad.selector.classList.add("activated");
+  // Play the sound associated with the pad
   pad.sound.play();
+  // After 500ms, remove the `"activated"` class from the pad
   setTimeout(() => pad.selector.classList.remove("activated"), 500);
 }
 
@@ -235,7 +199,6 @@ function activatePad(color) {
  */
 
 function activatePads(sequence) {
-  // TODO: Write your code here.
   sequence.forEach(function (element, index) {
     setTimeout(() => activatePad(element), 600 * (index + 1));
   });
@@ -243,49 +206,41 @@ function activatePads(sequence) {
 
 /**
  * Allows the computer to play its turn.
- *
- * 1. Add the `"unclickable"` class to `padContainer` to prevent the user from pressing
- * any of the pads
- *
- * 2. The status should display a message that says "The computer's turn..."
- *
- * 3. The heading should display a message that lets the player know how many rounds are left
- * (e.g., "`Round ${roundCount} of ${maxRoundCount}`")
- *
- * 4. Push a randomly selected color into the `computerSequence` array
- *
- * 5. Call `activatePads(computerSequence)` to light up each pad according to order defined in
- * `computerSequence`
- *
- * 6. The playHumanTurn() function needs to be called after the computer’s turn is over, so
- * we need to add a delay and calculate when the computer will be done with the sequence of
- * pad presses. The `setTimeout()` function executes `playHumanTurn(roundCount)` one second
- * after the last pad in the sequence is activated. The total duration of the sequence corresponds
- * to the current round (roundCount) multiplied by 600ms which is the duration for each pad in the
- * sequence.
  */
  function playComputerTurn() {
-  // TODO: Write your code here.
+  // Add the `"unclickable"` class to `padContainer` to prevent the user from pressing
+  // any of the pads
   padContainer.classList.add("unclickable");
+
+  // The status should display a message that says "The computer's turn..."
   statusSpan.innerHTML = "riki's turn...";
+
+  //The heading should display a message that lets the player know how many rounds are left
   heading.innerHTML = "round " + roundCount + " of " + maxRoundCount;
+
+  //Push a randomly selected color into the `computerSequence` array
   computerSequence.push(getRandomItem(pads).color);
+
+  //Call `activatePads(computerSequence)` to light up each pad according to order defined in
+  // `computerSequence`
   activatePads(computerSequence);
 
+  //The playHumanTurn() function needs to be called after the computer’s turn is over, so
+  // we need to add a delay and calculate when the computer will be done with the sequence of
+  // pad presses. The `setTimeout()` function executes `playHumanTurn(roundCount)` one second
+  // after the last pad in the sequence is activated. The total duration of the sequence corresponds
+  // to the current round (roundCount) multiplied by 600ms which is the duration for each pad in the
+  // sequence.
   setTimeout(() => playHumanTurn(roundCount), roundCount * 600 + 1000); 
 }
 
 /**
  * Allows the player to play their turn.
- *
- * 1. Remove the "unclickable" class from the pad container so that each pad is clickable again
- *
- * 2. Display a status message showing the player how many presses are left in the round
  */
 function playHumanTurn() {
-  // TODO: Write your code here.
+  // Remove the "unclickable" class from the pad container so that each pad is clickable again
   padContainer.classList.remove("unclickable");
-  //!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  // Display a status message showing the player how many presses are left in the round
   statusSpan.innerHTML = "presses left: " + (computerSequence.length - playerSequence.length);
   //statusSpan.innerHTML = "/player/i"; //doing this to pass the test case
 }
@@ -293,37 +248,32 @@ function playHumanTurn() {
 /**
  * Checks the player's selection every time the player presses on a pad during
  * the player's turn
- *
- * 1. Add the `color` variable to the end of the `playerSequence` array
- *
- * 2. Store the index of the `color` variable in a variable called `index`
- *
- * 3. Calculate how many presses are left in the round using
- * `computerSequence.length - playerSequence.length` and store the result in
- * a variable called `remainingPresses`
- *
- * 4. Set the status to let the player know how many presses are left in the round
- *
- * 5. Check whether the elements at the `index` position in `computerSequence`
- * and `playerSequence` match. If they don't match, it means the player made
- * a wrong turn, so call `resetGame()` with a failure message and exit the function
- *
- * 6. If there are no presses left (i.e., `remainingPresses === 0`), it means the round
- * is over, so call `checkRound()` instead to check the results of the round
- *
  */
 function checkPress(color) {
-  // TODO: Write your code here.
+  // Add the `color` variable to the end of the `playerSequence` array
   playerSequence.push(color);
+
+  // Store the index of the `color` variable in a variable called `index`
   let index = playerSequence.length - 1;
+
+  // Calculate how many presses are left in the round using
+  // `computerSequence.length - playerSequence.length` and store the result in
+  // a variable called `remainingPresses`
   let remainingPresses = computerSequence.length - playerSequence.length;
+
+  //Set the status to let the player know how many presses are left in the round
   statusSpan.innerHTML = "remaining presses: " + remainingPresses;
 
+  //Check whether the elements at the `index` position in `computerSequence`
+  // and `playerSequence` match. If they don't match, it means the player made
+  // a wrong turn, so call `resetGame()` with a failure message and exit the function
   if (computerSequence[index] !== playerSequence[index]) {
     resetGame("better luck next time!");
     return; 
   }
 
+  //If there are no presses left (i.e., `remainingPresses === 0`), it means the round
+  // is over, so call `checkRound()` instead to check the results of the round
   if (remainingPresses === 0) {
     checkRound(); 
     return;
@@ -333,25 +283,22 @@ function checkPress(color) {
 
 /**
  * Checks each round to see if the player has completed all the rounds of the game * or advance to the next round if the game has not finished.
- *
- * 1. If the length of the `playerSequence` array matches `maxRoundCount`, it means that
- * the player has completed all the rounds so call `resetGame()` with a success message
- *
- * 2. Else, the `roundCount` variable is incremented by 1 and the `playerSequence` array
- * is reset to an empty array.
- * - And the status text is updated to let the player know to keep playing (e.g., "Nice! Keep going!")
- * - And `playComputerTurn()` is called after 1000 ms (using setTimeout()). The delay
- * is to allow the user to see the success message. Otherwise, it will not appear at
- * all because it will get overwritten.
- *
  */
 
 function checkRound() {
-  // TODO: Write your code here.
+  //If the length of the `playerSequence` array matches `maxRoundCount`, it means that
+  // the player has completed all the rounds so call `resetGame()` with a success message
   if (playerSequence.length === maxRoundCount) {
     resetGame("congrats, you won!")
     return;
-  } else {
+  } 
+  //Else, the `roundCount` variable is incremented by 1 and the `playerSequence` array
+  // is reset to an empty array.
+  // - And the status text is updated to let the player know to keep playing (e.g., "Nice! Keep going!")
+  // - And `playComputerTurn()` is called after 1000 ms (using setTimeout()). The delay
+  // is to allow the user to see the success message. Otherwise, it will not appear at
+  // all because it will get overwritten
+  else {
     roundCount++;
     playerSequence.length = 0;
     statusSpan.innerHTML = "you got it!";
@@ -361,24 +308,30 @@ function checkRound() {
 
 /**
  * Resets the game. Called when either the player makes a mistake or wins the game.
- *
- * 1. Reset `computerSequence` to an empty array
- *
- * 2. Reset `playerSequence` to an empty array
- *
- * 3. Reset `roundCount` to an empty array
  */
 function resetGame(text) {
-  // TODO: Write your code here.
+  // Reset `computerSequence` to empty 
   computerSequence.length = [];
+
+  // Reset `playerSequence` to empty 
   playerSequence.length = [];
+
+  // Reset `roundCount` to empty 
   roundCount = 0;
 
   // Uncomment the code below:
    alert(text);
+
+   // Reset original game header
    setText(heading, "riki says");
+
+   // Show the start button again
    startButton.classList.remove("hidden");
+
+   // Hide status message
    statusSpan.classList.add("hidden");
+
+   // Make pads unclickable
    padContainer.classList.add("unclickable");
 }
 
